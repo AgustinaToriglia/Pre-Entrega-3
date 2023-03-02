@@ -1,7 +1,7 @@
 class Vehicle {
     constructor(id, brand, name, year, price, img) {
         this.id = id;
-        this.brand= brand;
+        this.brand = brand;
         this.name = name;
         this.year = year;
         this.price = price;
@@ -28,11 +28,7 @@ if (localStorage.getItem("carrito")) {
     carrito = JSON.parse(localStorage.getItem("carrito"));
 }
 
-//Modificamos el DOM mostrando los productos
-
 const vehicleContainer = document.getElementById("vehicleContainer");
-
-//Creamos una función para mostrar los productos. 
 
 const showVehicles = () => {
     vehicles.forEach(vehicle => {
@@ -50,7 +46,6 @@ const showVehicles = () => {
                         `
         vehicleContainer.appendChild(card);
 
-        //Agregar productos al carrito: 
         const boton = document.getElementById(`boton${vehicle.id}`);
         boton.addEventListener("click", () => {
             addToCart(vehicle.id);
@@ -59,8 +54,6 @@ const showVehicles = () => {
 }
 
 showVehicles();
-
-//Creamos la función agregar al carrito: 
 
 const addToCart = (id) => {
     const productoEnCarrito = carrito.find(vehicle => vehicle.id === id);
@@ -71,11 +64,8 @@ const addToCart = (id) => {
         carrito.push(vehicle);
     }
     calcularTotal();
-    //     //Trabajamos con el localStorage: 
-    // localStorage.setItem("carrito", JSON.stringify(carrito));
+    localStorage.setItem("carrito", JSON.stringify(carrito));
 }
-
-// //Mostrar el carrito de compras:
 
 const contenedorCarrito = document.getElementById("contenedorCarrito");
 const verCarrito = document.getElementById("verCarrito");
@@ -83,7 +73,6 @@ const verCarrito = document.getElementById("verCarrito");
 verCarrito.addEventListener("click", () => {
     mostrarCarrito();
 })
-
 const mostrarCarrito = () => {
     contenedorCarrito.innerHTML = "";
     carrito.forEach(vehicle => {
@@ -108,7 +97,7 @@ const mostrarCarrito = () => {
 
         const btnSubtract = document.getElementById(`restar${vehicle.id}`);
         btnSubtract.addEventListener("click", () => {
-            if(vehicle.amount !== 1){
+            if (vehicle.amount !== 1) {
                 vehicle.amount--;
             }
             mostrarCarrito();
@@ -116,12 +105,10 @@ const mostrarCarrito = () => {
 
         const btnAdd = document.getElementById(`sumar${vehicle.id}`);
         btnAdd.addEventListener("click", () => {
-            
-            vehicle.amount ++;          
+
+            vehicle.amount++;
             mostrarCarrito();
         })
-
-        //Eliminamos productos desde el carrito:
         const boton = document.getElementById(`eliminar${vehicle.id}`);
         boton.addEventListener("click", () => {
             eliminarDelCarrito(vehicle.id);
@@ -130,17 +117,12 @@ const mostrarCarrito = () => {
     calcularTotal();
 }
 
-// //Funcion que elimina el producto del carrito:
-
 const eliminarDelCarrito = (id) => {
     const vehicle = carrito.find(vehicle => vehicle.id === id);
     const indice = carrito.indexOf(vehicle);
     carrito.splice(indice, 1);
     mostrarCarrito();
 }
-
-
-// //Mostramos el total de la compra:
 
 const total = document.getElementById("total");
 
@@ -152,8 +134,6 @@ const calcularTotal = () => {
     total.innerHTML = `Total: $${totalCompra}`;
 }
 
-// //Vaciar todo el carrito:
-
 const vaciarCarrito = document.getElementById("vaciarCarrito");
 
 vaciarCarrito.addEventListener("click", () => {
@@ -163,7 +143,5 @@ vaciarCarrito.addEventListener("click", () => {
 const eliminarTodoElCarrito = () => {
     carrito = [];
     mostrarCarrito();
-
-    //LocalStorage:
     localStorage.clear();
 }
