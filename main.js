@@ -23,7 +23,7 @@ const showVehicles = () => {
         card.innerHTML = `
                         <div class ="card">
                             <img src = "${vehicles.imgUrl}" class = "card-img-top imgProductos" alt = "${vehicles.name}">
-                            <div>
+                            <div class="info">
                                 <h5> ${vehicles.name} </h5>
                                 <p> ${vehicles.price} </p>
                                 <button class = "btn colorBoton" id="boton${vehicles.id}" > Agregar a la reserva</button>
@@ -87,7 +87,7 @@ const mostrarCarrito = () => {
         card.innerHTML = `
                         <div class ="card">
                             <img src = "${vehicles.imgUrl}" class = "card-img-top imgProductos" alt = "${vehicles.name}">
-                            <div>
+                            <div class="info">
                                 <h5> ${vehicles.name} </h5>
                                 <p> ${vehicles.price} </p>
                                 <button class = "btn colorBoton" id="restar${vehicles.id}" > - </button>
@@ -145,17 +145,14 @@ const calcularTotal = () => {
     total.innerHTML = `Total: $${totalCompra}`;
 }
 
-
-
 const vaciarCarrito = document.getElementById("vaciarCarrito");
-
-
 const eliminarTodoElCarrito = () => {
-    localStorage.setItem("carrito", []);
-    localStorage.setItem("mostrarCarrito", false);
     carrito = [];
-
+    localStorage.setItem("carrito", JSON.stringify(carrito));
+    localStorage.setItem("mostrarCarrito", false);
     mostrarCarrito();
+}
+
     vaciarCarrito.addEventListener("click", () => {
         Swal.fire({
             title: "¿Seguro que quieres vaciar el carrito?",
@@ -173,10 +170,9 @@ const eliminarTodoElCarrito = () => {
                         title: "Carrito Vacio",
                         icon: "success",
                         confirmButtonText: "Aceptar",
-
-                        background: "green",
+                        background: "lightslategray",
                     })
                 }
             })
     })
-}
+
