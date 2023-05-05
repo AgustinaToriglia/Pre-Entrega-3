@@ -55,11 +55,11 @@ const showVehicles = () => {
 }
 
 const addToCart = (id) => {
-    const productoEnCarrito = carrito.find(vehicles => vehicles.id === id);
+    let productoEnCarrito = carrito.find(vehicles => vehicles.id === id);
     if (productoEnCarrito) {
         productoEnCarrito.amount++;
     } else {
-        const vehicle = vehicles.find(vehicles => vehicles.id === id);
+        let vehicle = vehicles.find(vehicles => vehicles.id === id);
         const copy = JSON.parse(JSON.stringify(vehicle));
         copy.amount = 1
         carrito.push(copy);
@@ -68,7 +68,7 @@ const addToCart = (id) => {
     localStorage.setItem("carrito", JSON.stringify(carrito));
 
     const mCarrito = localStorage.getItem("mostrarCarrito");
-    if (mCarrito === true) {
+    if (mCarrito === "true") {
         mostrarCarrito();
     }
 }
@@ -79,6 +79,7 @@ const verCarrito = document.getElementById("verCarrito");
 verCarrito.addEventListener("click", () => {
     mostrarCarrito();
 })
+
 const mostrarCarrito = () => {
     contenedorCarrito.innerHTML = "";
     carrito.forEach(vehicles => {
@@ -153,26 +154,38 @@ const eliminarTodoElCarrito = () => {
     mostrarCarrito();
 }
 
-    vaciarCarrito.addEventListener("click", () => {
-        Swal.fire({
-            title: "¿Seguro que quieres vaciar el carrito?",
-            icon: "warning",
-            confirmButtonText: "Aceptar",
-            showCancelButton: true,
-            cancelButtonText: "Cancelar",
-            background: "lightslategray",
-        })
-            .then((result) => {
-                if (result.isConfirmed) {
-                    console.log("voy a eliminar todo el carrito")
-                    eliminarTodoElCarrito();
-                    Swal.fire({
-                        title: "Carrito Vacio",
-                        icon: "success",
-                        confirmButtonText: "Aceptar",
-                        background: "lightslategray",
-                    })
-                }
-            })
+vaciarCarrito.addEventListener("click", () => {
+    Swal.fire({
+        title: "¿Seguro que quieres vaciar el carrito?",
+        icon: "warning",
+        confirmButtonText: "Aceptar",
+        showCancelButton: true,
+        cancelButtonText: "Cancelar",
+        background: "lightslategray",
     })
+        .then((result) => {
+            if (result.isConfirmed) {
+                console.log("voy a eliminar todo el carrito")
+                eliminarTodoElCarrito();
+                Swal.fire({
+                    title: "Carrito Vacio",
+                    icon: "success",
+                    confirmButtonText: "Aceptar",
+                    background: "lightslategray",
+                })
+            }
+        })
+})
+
+const finalizarReserva = document.getElementById("finalizarReserva");
+finalizarReserva.addEventListener("click", () => {
+    Swal.fire({
+        title: "MendoTravel",
+        text: "¿Desea finalizar su reserva?",
+        icon: "question",
+        confirmButtonText: "Finalizar Reserva",
+        background: "lightslategray",
+
+    });
+})
 
